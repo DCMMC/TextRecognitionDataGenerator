@@ -6,6 +6,13 @@ import requests
 from bs4 import BeautifulSoup
 
 
+# DCMMC: add proxies
+proxies = {
+    "http": "socks5h://127.0.0.1:1080",
+    'https': 'socks5h://127.0.0.1:1080'
+}
+
+
 def create_strings_from_file(filename, count):
     """
         Create all strings by reading lines in specified files
@@ -47,10 +54,15 @@ def create_strings_from_wikipedia(minimum_length, count, lang):
         Create all string by randomly picking Wikipedia articles and taking sentences from them.
     """
     sentences = []
+    # DCMMC: cn.wikipedia.org not found!
+    lang = lang if lang != 'cn' else 'zh'
 
     while len(sentences) < count:
         # We fetch a random page
-        page = requests.get("https://{}.wikipedia.org/wiki/Special:Random".format(lang))
+        page = requests.get(
+            "https://{}.wikipedia.org/wiki/Special:Random".format(lang),
+            proxies=proxies
+        )
 
         soup = BeautifulSoup(page.text, "html.parser")
 
