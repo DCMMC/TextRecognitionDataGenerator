@@ -26,7 +26,8 @@ def create_strings_from_file(filename, count, max_length=70):
         lines = []
         for l in f.read().splitlines():
             if len(l):
-                lines.extend(textwrap.wrap(l.strip(), width=max_length))
+                # lines.extend(textwrap.wrap(l.strip(), width=max_length))
+                lines.append(l)
         if len(lines) == 0:
             raise Exception("No lines could be read in file")
         strings += lines[:count]
