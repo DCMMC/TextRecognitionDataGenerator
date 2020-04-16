@@ -349,7 +349,8 @@ def main():
     if args.use_wikipedia:
         strings = create_strings_from_wikipedia(args.length, args.count, args.language)
     elif args.input_file != "":
-        strings = create_strings_from_file(args.input_file, args.count)
+        # DCMMC: must specific length for max length
+        strings = create_strings_from_file(args.input_file, args.count, args.length)
     elif args.random_sequences:
         strings = create_strings_randomly(
             args.length,

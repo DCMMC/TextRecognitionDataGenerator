@@ -2,7 +2,7 @@ import random as rnd
 import re
 import string
 import requests
-
+import textwrap
 from bs4 import BeautifulSoup
 
 
@@ -13,7 +13,7 @@ proxies = {
 }
 
 
-def create_strings_from_file(filename, count):
+def create_strings_from_file(filename, count, max_length=70):
     """
         Create all strings by reading lines in specified files
     """
@@ -21,7 +21,12 @@ def create_strings_from_file(filename, count):
     strings = []
 
     with open(filename, "r", encoding="utf8") as f:
-        lines = [l[0:200] for l in f.read().splitlines() if len(l) > 0]
+        # lines = [l[0:200] for l in f.read().splitlines() if len(l) > 0]
+        # DCMMC: set maximum length for each sample
+        lines = []
+        for l in f.read().splitlines():
+            if len(l):
+                lines.extend(textwrap.wrap(l.strip(), width=max_length))
         if len(lines) == 0:
             raise Exception("No lines could be read in file")
         while len(strings) < count:
