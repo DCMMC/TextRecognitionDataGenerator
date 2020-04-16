@@ -29,11 +29,12 @@ def create_strings_from_file(filename, count, max_length=70):
                 lines.extend(textwrap.wrap(l.strip(), width=max_length))
         if len(lines) == 0:
             raise Exception("No lines could be read in file")
-        while len(strings) < count:
-            if len(lines) >= count - len(strings):
-                strings.extend(lines[0 : count - len(strings)])
-            else:
-                strings.extend(lines)
+        strings += lines[:count]
+        # while len(strings) < count:
+        #     if len(lines) >= count - len(strings):
+        #         strings.extend(lines[0 : count - len(strings)])
+        #     else:
+        #         strings.extend(lines)
 
     return strings
 
